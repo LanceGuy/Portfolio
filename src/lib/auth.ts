@@ -26,7 +26,6 @@ export function validateAdminPassword(password: string): boolean {
   const expectedHash = process.env.ADMIN_PASSWORD_HASH;
 
   if (!expectedHash) {
-    console.error("ADMIN_PASSWORD_HASH not set in environment");
     return false;
   }
 

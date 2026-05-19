@@ -78,8 +78,7 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Upload error:", error);
+  } catch {
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

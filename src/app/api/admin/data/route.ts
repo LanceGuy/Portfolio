@@ -3,7 +3,7 @@ import { verifyAdminSession } from "@/lib/session";
 import { projects, profile, highlights, skills, experience, education } from "@/lib/data";
 
 // This endpoint returns all portfolio data
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const isAdmin = await verifyAdminSession();
 
@@ -22,8 +22,7 @@ export async function GET(request: NextRequest) {
       experience,
       education,
     });
-  } catch (error) {
-    console.error("GET /api/admin/data error:", error);
+  } catch {
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
@@ -44,7 +43,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { section, data } = body;
+    const { section } = body;
 
     if (!section) {
       return NextResponse.json(
@@ -61,8 +60,7 @@ export async function PUT(request: NextRequest) {
       message: "Data updated successfully",
       section,
     });
-  } catch (error) {
-    console.error("PUT /api/admin/data error:", error);
+  } catch {
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

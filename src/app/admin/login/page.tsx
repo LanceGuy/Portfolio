@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
@@ -38,9 +39,8 @@ export default function AdminLoginPage() {
       // Successful login - redirect to admin dashboard
       setPassword("");
       router.push("/admin");
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.");
-      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }
@@ -93,12 +93,12 @@ export default function AdminLoginPage() {
           </form>
 
           <p className="mt-6 text-center text-xs text-muted">
-            <a
+            <Link
               href="/"
               className="font-semibold text-foreground transition hover:text-accent"
             >
               Back to portfolio
-            </a>
+            </Link>
           </p>
         </div>
       </div>

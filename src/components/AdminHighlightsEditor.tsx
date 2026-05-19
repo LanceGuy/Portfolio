@@ -1,6 +1,11 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import {
+  removeListItem,
+  saveAdminSection,
+  upsertListItem,
+} from "@/lib/adminClient";
 import { highlights } from "@/lib/data";
 
 interface Highlight {
@@ -33,9 +38,9 @@ export default function AdminHighlightsEditor() {
 
   const handleDelete = async (index: number) => {
     if (confirm("Are you sure you want to delete this highlight?")) {
-      const newList = highlightsList.filter((_, i) => i !== index);
+      const newList = removeListItem(highlightsList, index);
       setHighlightsList(newList);
-      await saveHighlights(newList);
+      await saveAdminSection("highlights", newList);
     }
   };
 
@@ -44,46 +49,19 @@ export default function AdminHighlightsEditor() {
     setSaving(true);
 
     try {
-      let newList = [...highlightsList];
-
-      if (editingId !== null) {
-        // Update existing highlight
-        newList[editingId] = formData;
-      } else {
-        // Add new highlight
-        newList.push(formData);
-      }
-
+      const newList = upsertListItem(highlightsList, formData, editingId);
       setHighlightsList(newList);
-      await saveHighlights(newList);
+      await saveAdminSection("highlights", newList);
 
       setShowForm(false);
       setFormData({ label: "", value: "" });
       setEditingId(null);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error saving highlight:", error);
+    } catch {
       alert("Failed to save highlight");
     } finally {
       setSaving(false);
-    }
-  };
-
-  const saveHighlights = async (highlightsData: Highlight[]) => {
-    const response = await fetch("/api/admin/data", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        section: "highlights",
-        data: highlightsData,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to save highlights");
     }
   };
 

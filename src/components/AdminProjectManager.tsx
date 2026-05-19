@@ -1,35 +1,37 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
-import { projects } from "@/lib/data";
-import { Project } from "@/lib/data";
+import {
+  addTrimmedItem,
+  removeListItem,
+  saveAdminSection,
+  upsertListItem,
+} from "@/lib/adminClient";
+import { projects, type Project } from "@/lib/data";
+
+type ProjectFormData = Partial<Project & { image?: string }>;
+
+const emptyProjectForm: ProjectFormData = {
+  title: "",
+  description: "",
+  tech: [],
+  imageLabel: "",
+  links: [],
+  image: undefined,
+};
 
 export default function AdminProjectManager() {
   const [projectsList, setProjectsList] = useState<Project[]>(projects);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState<Partial<Project & { image?: string }>>({
-    title: "",
-    description: "",
-    tech: [],
-    imageLabel: "",
-    links: [],
-    image: undefined,
-  });
+  const [formData, setFormData] = useState<ProjectFormData>(emptyProjectForm);
   const [techInput, setTechInput] = useState("");
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAddNew = () => {
-    setFormData({
-      title: "",
-      description: "",
-      tech: [],
-      imageLabel: "",
-      links: [],
-      image: undefined,
-    });
+    setFormData(emptyProjectForm);
     setEditingId(null);
     setShowForm(true);
     setTechInput("");
@@ -44,21 +46,20 @@ export default function AdminProjectManager() {
 
   const handleDelete = async (index: number) => {
     if (confirm("Are you sure you want to delete this project?")) {
-      const newList = projectsList.filter((_, i) => i !== index);
+      const newList = removeListItem(projectsList, index);
       setProjectsList(newList);
-      await saveProjects(newList);
+      await saveAdminSection("projects", newList);
     }
   };
 
   const handleAddTech = () => {
-    if (techInput.trim()) {
-      const newTech = [
-        ...(formData.tech || []),
-        techInput.trim(),
-      ];
-      setFormData({ ...formData, tech: newTech });
-      setTechInput("");
+    if (!techInput.trim()) {
+      return;
     }
+
+    const newTech = addTrimmedItem(formData.tech || [], techInput);
+    setFormData({ ...formData, tech: newTech });
+    setTechInput("");
   };
 
   const handleRemoveTech = (index: number) => {
@@ -89,8 +90,7 @@ export default function AdminProjectManager() {
 
       const data = await response.json();
       setFormData({ ...formData, image: data.path });
-    } catch (error) {
-      console.error("Upload error:", error);
+    } catch {
       alert("Failed to upload image");
     } finally {
       setUploading(false);
@@ -102,50 +102,21 @@ export default function AdminProjectManager() {
     setSaving(true);
 
     try {
-      let newList = [...projectsList];
-
-      if (editingId !== null) {
-        // Update existing project
-        newList[editingId] = formData as Project;
-      } else {
-        // Add new project
-        newList.push(formData as Project);
-      }
-
+      const newList = upsertListItem(
+        projectsList,
+        formData as Project,
+        editingId
+      );
       setProjectsList(newList);
-      await saveProjects(newList);
+      await saveAdminSection("projects", newList);
 
       setShowForm(false);
-      setFormData({
-        title: "",
-        description: "",
-        tech: [],
-        imageLabel: "",
-        links: [],
-      });
+      setFormData(emptyProjectForm);
       setEditingId(null);
-    } catch (error) {
-      console.error("Error saving project:", error);
+    } catch {
       alert("Failed to save project");
     } finally {
       setSaving(false);
-    }
-  };
-
-  const saveProjects = async (projectsData: Project[]) => {
-    const response = await fetch("/api/admin/data", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        section: "projects",
-        data: projectsData,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to save projects");
     }
   };
 
@@ -260,7 +231,7 @@ export default function AdminProjectManager() {
                 type="text"
                 value={techInput}
                 onChange={(e) => setTechInput(e.target.value)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
                     handleAddTech();

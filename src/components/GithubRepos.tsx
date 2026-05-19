@@ -9,6 +9,9 @@ type Repo = {
   description: string | null;
   language: string | null;
   updated_at: string;
+  owner: {
+    login: string;
+  };
 };
 
 type Status = "idle" | "loading" | "error" | "success";
@@ -29,7 +32,7 @@ export default function GithubRepos() {
         const data = (await response.json()) as Repo[];
         setRepos(data);
         setStatus("success");
-      } catch (error) {
+      } catch {
         setStatus("error");
       }
     };
@@ -51,7 +54,7 @@ export default function GithubRepos() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {repos.slice(0, 6).map((repo) => (
+      {repos.slice(0, 12).map((repo) => (
         <a
           key={repo.id}
           href={repo.html_url}
@@ -64,6 +67,9 @@ export default function GithubRepos() {
               <h3 className="text-sm font-semibold text-foreground">
                 {repo.name}
               </h3>
+              <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
+                {repo.owner.login}
+              </p>
               <p className="mt-2 text-xs leading-5 text-muted">
                 {repo.description ?? "No description provided."}
               </p>

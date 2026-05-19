@@ -12,7 +12,6 @@ type AdminTab = "projects" | "profile" | "skills" | "highlights";
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<AdminTab>("profile");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -28,8 +27,7 @@ export default function AdminDashboard() {
           throw new Error("Failed to verify session");
         }
         setLoading(false);
-      } catch (err) {
-        console.error("Session verification error:", err);
+      } catch {
         router.push("/admin/login");
       }
     };
@@ -41,8 +39,8 @@ export default function AdminDashboard() {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       router.push("/");
-    } catch (err) {
-      console.error("Logout error:", err);
+    } catch {
+      return;
     }
   };
 
@@ -79,12 +77,6 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="mx-auto w-full max-w-6xl px-6 py-8">
-        {error && (
-          <div className="mb-6 rounded-lg border border-red-500/20 bg-red-500/10 p-4">
-            <p className="text-sm text-red-600">{error}</p>
-          </div>
-        )}
-
         {/* Tab Navigation */}
         <div className="mb-8 flex gap-2 border-b border-ink/10">
           {(["profile", "projects", "skills", "highlights"] as const).map(

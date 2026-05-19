@@ -8,8 +8,7 @@ export async function POST() {
       { message: "Logout successful" },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Logout error:", error);
+  } catch {
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

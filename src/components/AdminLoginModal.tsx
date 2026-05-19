@@ -51,9 +51,8 @@ export default function AdminLoginModal({
       setPassword("");
       onClose();
       router.push("/admin");
-    } catch (err) {
+    } catch {
       setError("An error occurred. Please try again.");
-      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }

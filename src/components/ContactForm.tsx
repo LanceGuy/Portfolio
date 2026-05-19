@@ -39,7 +39,7 @@ export default function ContactForm() {
       setStatus("success");
       setFormData(initialState);
       alert("Thanks for reaching out! Your message has been received.");
-    } catch (error) {
+    } catch {
       setStatus("error");
     }
   };

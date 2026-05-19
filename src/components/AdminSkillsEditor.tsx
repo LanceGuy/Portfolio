@@ -1,8 +1,13 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { skills } from "@/lib/data";
-import { SkillGroup } from "@/lib/data";
+import {
+  addTrimmedItem,
+  removeListItem,
+  saveAdminSection,
+  upsertListItem,
+} from "@/lib/adminClient";
+import { skills, type SkillGroup } from "@/lib/data";
 
 export default function AdminSkillsEditor() {
   const [skillsList, setSkillsList] = useState<SkillGroup[]>(skills);
@@ -32,18 +37,22 @@ export default function AdminSkillsEditor() {
 
   const handleDelete = async (index: number) => {
     if (confirm("Are you sure you want to delete this skill group?")) {
-      const newList = skillsList.filter((_, i) => i !== index);
+      const newList = removeListItem(skillsList, index);
       setSkillsList(newList);
-      await saveSkills(newList);
+      await saveAdminSection("skills", newList);
     }
   };
 
   const handleAddItem = () => {
-    if (itemInput.trim()) {
-      const newItems = [...formData.items, itemInput.trim()];
-      setFormData({ ...formData, items: newItems });
-      setItemInput("");
+    if (!itemInput.trim()) {
+      return;
     }
+
+    setFormData({
+      ...formData,
+      items: addTrimmedItem(formData.items, itemInput),
+    });
+    setItemInput("");
   };
 
   const handleRemoveItem = (index: number) => {
@@ -67,18 +76,9 @@ export default function AdminSkillsEditor() {
     setSaving(true);
 
     try {
-      let newList = [...skillsList];
-
-      if (editingId !== null) {
-        // Update existing skill group
-        newList[editingId] = formData;
-      } else {
-        // Add new skill group
-        newList.push(formData);
-      }
-
+      const newList = upsertListItem(skillsList, formData, editingId);
       setSkillsList(newList);
-      await saveSkills(newList);
+      await saveAdminSection("skills", newList);
 
       setShowForm(false);
       setFormData({ title: "", items: [] });
@@ -86,28 +86,10 @@ export default function AdminSkillsEditor() {
       setItemInput("");
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error saving skills:", error);
+    } catch {
       alert("Failed to save skills");
     } finally {
       setSaving(false);
-    }
-  };
-
-  const saveSkills = async (skillsData: SkillGroup[]) => {
-    const response = await fetch("/api/admin/data", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        section: "skills",
-        data: skillsData,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to save skills");
     }
   };
 
@@ -155,7 +137,7 @@ export default function AdminSkillsEditor() {
                 type="text"
                 value={itemInput}
                 onChange={(e) => setItemInput(e.target.value)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
                     handleAddItem();

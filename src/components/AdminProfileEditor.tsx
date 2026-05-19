@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
+import { saveAdminSection } from "@/lib/adminClient";
 import { profile } from "@/lib/data";
 
 export default function AdminProfileEditor() {
@@ -39,8 +40,7 @@ export default function AdminProfileEditor() {
 
       const data = await response.json();
       setProfileImage(data.path);
-    } catch (error) {
-      console.error("Upload error:", error);
+    } catch {
       alert("Failed to upload image");
     } finally {
       setUploading(false);
@@ -53,33 +53,19 @@ export default function AdminProfileEditor() {
     setSuccess(false);
 
     try {
-      const response = await fetch("/api/admin/data", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          section: "profile",
-          data: {
-            bio,
-            intro,
-            role,
-            location,
-            email,
-            phone,
-            profileImage: profileImage || null,
-          },
-        }),
+      await saveAdminSection("profile", {
+        bio,
+        intro,
+        role,
+        location,
+        email,
+        phone,
+        profileImage: profileImage || null,
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to save profile");
-      }
 
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error saving profile:", error);
+    } catch {
       alert("Failed to save profile");
     } finally {
       setSaving(false);
