@@ -1,10 +1,5 @@
+import Image from "next/image";
 import type { Project } from "@/lib/data";
-
-const placeholderGradients = [
-  "from-amber-200 via-rose-200 to-violet-200",
-  "from-sky-200 via-emerald-200 to-amber-200",
-  "from-rose-200 via-orange-200 to-lime-200",
-];
 
 export default function ProjectCard({
   project,
@@ -13,17 +8,20 @@ export default function ProjectCard({
   project: Project;
   index: number;
 }) {
-  const gradient = placeholderGradients[index % placeholderGradients.length];
-
   return (
     <article
       className="group fade-in-up flex h-full flex-col overflow-hidden rounded-3xl border border-ink/10 bg-surface/80 shadow-soft transition hover:-translate-y-1 hover:shadow-strong"
       style={{ animationDelay: `${index * 90}ms` }}
     >
       <div className="relative h-44 w-full">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-90`}
+        <Image
+          src={project.imageSrc}
+          alt={project.imageLabel}
+          fill
+          sizes="(min-width: 1024px) 33vw, 100vw"
+          className="object-cover transition duration-500 group-hover:scale-105"
         />
+        <div className="absolute inset-0 bg-ink/20" />
         <div className="absolute inset-0 flex items-end p-4">
           <span className="rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
             {project.imageLabel}

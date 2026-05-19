@@ -30,9 +30,11 @@
 ## Operational Checks
 
 - Confirm the GitHub API route returns data by visiting `/api/github` locally.
+- Confirm collaborator repositories appear only when `GITHUB_TOKEN` is configured, and confirm private repositories are not returned.
 - Confirm the contact route returns `{ "ok": true }` by posting to `/api/contact`.
 
 ## Troubleshooting
 
-- **GitHub repositories missing:** Validate `GITHUB_USERNAME` and `GITHUB_TOKEN` in your local environment file, then restart the dev server.
+- **GitHub repositories missing:** Validate `GITHUB_USERNAME` in your local environment file and confirm GitHub is reachable.
+- **Collaborator repositories missing:** Set `GITHUB_TOKEN` in your local environment file or deployment settings, then restart the app. The route only returns public repositories.
 - **Dark mode not persisting:** Clear browser storage and toggle the theme again to reset the `portfolio-theme` key.

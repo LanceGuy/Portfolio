@@ -60,8 +60,11 @@ copy .env.example .env.local
 
 Optional values:
 
-- `GITHUB_USERNAME` (defaults to `LanceGuy`)
-- `GITHUB_TOKEN` (optional to avoid GitHub rate limits)
+- `GITHUB_USERNAME` (comma-separated usernames; defaults to `LanceGuy,Habberjay`)
+- `GITHUB_COLLAB_REPOS` (optional comma-separated exact public repositories, for example `owner/repo`)
+- `GITHUB_TOKEN` (optional; also enables public collaborator and organization-member repositories)
+
+Without `GITHUB_TOKEN`, the GitHub section falls back to public repositories from the configured usernames plus any exact repositories in `GITHUB_COLLAB_REPOS`. With a token, the API can include public repositories where the token owner is an owner, collaborator, or organization member. Private repositories are filtered out.
 
 ## Scripts
 

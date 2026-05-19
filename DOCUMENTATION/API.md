@@ -37,7 +37,7 @@ curl -X POST http://localhost:3000/api/contact \
 
 ## GET /api/github
 
-**Purpose:** Returns public GitHub repositories for the configured username.
+**Purpose:** Returns public GitHub repositories for the configured usernames and exact public repositories listed in `GITHUB_COLLAB_REPOS`. When `GITHUB_TOKEN` is set, it also includes public repositories where the token owner is an owner, collaborator, or organization member.
 
 **Request:**
 
@@ -49,12 +49,17 @@ curl http://localhost:3000/api/github
 
 **Notes:**
 - The route uses the Edge runtime and caches responses for 30 minutes.
+- Without `GITHUB_TOKEN`, the route falls back to public repositories from the configured usernames and exact public repositories listed in `GITHUB_COLLAB_REPOS`.
+- With `GITHUB_TOKEN`, the route requests authenticated repositories using `owner`, `collaborator`, and `organization_member` affiliations.
+- Private repositories are filtered out before returning data to the client.
+- Repositories with the same display name are deduplicated, preferring non-forks and then the most recently updated repository.
 - If the GitHub API call fails, the route returns an empty array with status 200.
 - See implementation details in [src/app/api/github/route.ts](src/app/api/github/route.ts).
 
 ## Environment Variables
 
-- `GITHUB_USERNAME` (defaults to `LanceGuy`)
-- `GITHUB_TOKEN` (optional to avoid GitHub rate limits)
+- `GITHUB_USERNAME` (comma-separated usernames; defaults to `LanceGuy,Habberjay`)
+- `GITHUB_COLLAB_REPOS` (optional comma-separated exact public repositories, for example `owner/repo`)
+- `GITHUB_TOKEN` (optional; enables public collaborator and organization-member repositories and helps avoid rate limits)
 
 Variables are defined in [.env.example](.env.example).

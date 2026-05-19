@@ -2,6 +2,7 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import GithubRepos from "@/components/GithubRepos";
 import Header from "@/components/Header";
+import Image from "next/image";
 import ProjectCard from "@/components/ProjectCard";
 import Section from "@/components/Section";
 import SkillGroup from "@/components/SkillGroup";
@@ -52,9 +53,16 @@ export default function Home() {
             </div>
           </div>
           <div className="rounded-3xl border border-ink/10 bg-surface/80 p-6 shadow-soft">
-            <div className="flex items-center gap-4">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-ink/90 text-2xl font-semibold text-white">
-                {profile.initials}
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full bg-ink/10">
+                <Image
+                  src={profile.imageSrc}
+                  alt={`${profile.name} profile photo`}
+                  fill
+                  sizes="128px"
+                  className="object-cover"
+                  priority
+                />
               </div>
               <div>
                 <p className="text-sm uppercase tracking-[0.2em] text-muted">

@@ -33,6 +33,8 @@ copy .env.example .env.local
 
 Available variables are defined in [.env.example](.env.example).
 
+`GITHUB_USERNAME` accepts a comma-separated list of usernames. `GITHUB_COLLAB_REPOS` accepts exact public repositories in `owner/repo` format for collaborator projects that should appear even without token discovery. `GITHUB_TOKEN` is optional. Without it, the GitHub section shows public repositories from the configured usernames plus any exact repositories in `GITHUB_COLLAB_REPOS`. With it, the API can also show public repositories where the token owner is an owner, collaborator, or organization member. Private repositories are filtered out.
+
 ## Run Locally
 
 ```bash
@@ -57,4 +59,5 @@ npm run lint
 ## Troubleshooting
 
 - If the GitHub section shows no repositories, verify `GITHUB_USERNAME` in your local environment file and confirm the GitHub API is reachable.
+- If collaborated repositories are missing, set `GITHUB_TOKEN` in your local environment file and restart the dev server, or add exact public repos to `GITHUB_COLLAB_REPOS`.
 - If you hit GitHub rate limits, set `GITHUB_TOKEN` in your local environment file and restart the dev server.

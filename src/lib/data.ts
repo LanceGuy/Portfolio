@@ -7,6 +7,7 @@ export type Project = {
   title: string;
   description: string;
   tech: string[];
+  imageSrc: string;
   imageLabel: string;
   links?: LinkItem[];
 };
@@ -34,6 +35,7 @@ export const profile = {
   name: "Lance Daniel S. Guy",
   role: "Computer Science Student | Full-Stack Developer",
   location: "Cebu, Philippines",
+  imageSrc: "/images/profile/profile-pic.png",
   email: "guylancedaniel@gmail.com",
   phone: "+63 928 366 3101",
   github: [
@@ -82,6 +84,7 @@ export const projects: Project[] = [
       "Tailwind CSS",
       "Recharts",
     ],
+    imageSrc: "/images/projects/project-showcase.png",
     imageLabel: "Dormitory platform dashboard",
   },
   {
@@ -96,14 +99,28 @@ export const projects: Project[] = [
       "Mapbox",
       "Tailwind CSS",
     ],
+    imageSrc: "/images/projects/project-showcase.png",
     imageLabel: "Evacuation simulation map",
+    links: [
+      {
+        label: "Live site",
+        href: "https://evacsim.vercel.app",
+      },
+    ],
   },
   {
     title: "FLiNG (Global Game Jam)",
     description:
       "Playable web game with click-and-drag launch mechanics, physics-driven gameplay, enemy AI, and full game flow.",
     tech: ["Godot"],
+    imageSrc: "/images/projects/project-showcase.png",
     imageLabel: "Physics-driven game scene",
+    links: [
+      {
+        label: "Play on itch.io",
+        href: "https://habberjay.itch.io/fling",
+      },
+    ],
   },
 ];
 

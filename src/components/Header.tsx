@@ -1,4 +1,5 @@
 import { profile } from "@/lib/data";
+import Image from "next/image";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
@@ -14,8 +15,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-ink/10 bg-surface/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-ink/90 text-sm font-semibold text-white">
-            {profile.initials}
+          <div className="relative h-10 w-10 overflow-hidden rounded-full bg-ink/10">
+            <Image
+              src={profile.imageSrc}
+              alt={`${profile.name} profile photo`}
+              fill
+              sizes="40px"
+              className="object-cover"
+            />
           </div>
           <div>
             <p className="text-sm font-semibold text-foreground">
