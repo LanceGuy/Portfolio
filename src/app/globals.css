@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f4ee;
+  --foreground: #1b1a17;
+  --surface: #ffffff;
+  --muted: #6e6258;
+  --accent: #f1663a;
+  --accent-strong: #cf4e2b;
+  --ink: #1b1a17;
+  --shadow-soft: 0 18px 36px rgba(27, 26, 23, 0.08);
+  --shadow-strong: 0 28px 48px rgba(27, 26, 23, 0.16);
+}
+
+.dark {
+  --background: #0f1012;
+  --foreground: #f4f1ea;
+  --surface: #17181c;
+  --muted: #b7a99b;
+  --accent: #f38a62;
+  --accent-strong: #d46d46;
+  --ink: #f4f1ea;
+  --shadow-soft: 0 18px 36px rgba(0, 0, 0, 0.3);
+  --shadow-strong: 0 28px 52px rgba(0, 0, 0, 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-ink: var(--ink);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-strong: var(--shadow-strong);
+  --font-sans: var(--font-space-grotesk);
+  --font-serif: var(--font-fraunces);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), "Segoe UI", sans-serif;
+  line-height: 1.6;
+  background-image:
+    radial-gradient(circle at top left, rgba(241, 102, 58, 0.12), transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(67, 159, 177, 0.12), transparent 50%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-fraunces), "Times New Roman", serif;
+}
+
+.bg-canvas {
+  background-color: var(--background);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-accent-strong {
+  color: var(--accent-strong);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-accent-strong {
+  background-color: var(--accent-strong);
+}
+
+.border-ink\/10 {
+  border-color: color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.bg-ink\/5 {
+  background-color: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+.bg-ink\/80 {
+  background-color: color-mix(in srgb, var(--ink) 80%, transparent);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.shadow-strong {
+  box-shadow: var(--shadow-strong);
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.8s ease both;
+}
