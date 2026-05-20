@@ -13,14 +13,14 @@
 }
 
 .dark {
-  --background: #0f1012;
-  --foreground: #f4f1ea;
-  --surface: #17181c;
-  --muted: #b7a99b;
-  --accent: #f38a62;
-  --accent-strong: #d46d46;
-  --ink: #f4f1ea;
-  --shadow-soft: 0 18px 36px rgba(0, 0, 0, 0.3);
+  --background: #000000ff; /* keep dark background black */
+  --foreground: #ffffffff; /* white */
+  --surface: #08192dff; /* slightly different dark-blue surface in dark mode */
+  --muted: #94d2bdff; /* retain some muted tone */
+  --accent: #fca311ff; /* orange */
+  --accent-strong: #003459ff; /* deep-space-blue */
+  --ink: #ffffffff; /* white */
+  --shadow-soft: 0 18px 36px rgba(0, 0, 0, 0.32);
   --shadow-strong: 0 28px 52px rgba(0, 0, 0, 0.5);
 }
 
@@ -48,8 +48,9 @@ body {
   font-family: var(--font-space-grotesk), "Segoe UI", sans-serif;
   line-height: 1.6;
   background-image:
-    radial-gradient(circle at top left, rgba(241, 102, 58, 0.12), transparent 45%),
-    radial-gradient(circle at 20% 80%, rgba(67, 159, 177, 0.12), transparent 50%);
+    radial-gradient(circle at top left, rgba(11, 37, 64, 0.14), transparent 40%),
+    radial-gradient(circle at 80% 15%, rgba(252, 163, 17, 0.06), transparent 36%),
+    radial-gradient(circle at 20% 80%, rgba(0, 0, 0, 0.06), transparent 48%);
 }
 
 h1,
@@ -124,4 +125,28 @@ h4 {
 
 .fade-in-up {
   animation: fade-in-up 0.8s ease both;
+}
+
+@keyframes popup-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes notice-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.popup-rise {
+  animation: popup-rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

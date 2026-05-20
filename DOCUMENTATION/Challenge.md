@@ -18,7 +18,8 @@
  ●   Built using HTML + CSS + JavaScript or any stack you’re comfortable with  (React, Vue, Laravel, etc.) 
  ●   Must be responsive (works well on mobile and desktop) 
  ●   Clean, organized layout (use Flexbox/Grid or a CSS framework) 
- ●   Smooth navigation between sections or pages  2. Bonus (Optional): 
+ ●   Smooth navigation between sections or pages  
+ 2. Bonus (Optional): 
  ●   Dark mode toggle (bonus if it saves preference) 
  ●   Fetch your GitHub repos dynamically from GitHub API 
  ●   Use animations (e.g., scroll fade-ins, hover effects) 

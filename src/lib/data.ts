@@ -84,8 +84,14 @@ export const projects: Project[] = [
       "Tailwind CSS",
       "Recharts",
     ],
-    imageSrc: "/images/projects/project-showcase.png",
+    imageSrc: "/images/projects/upc-dms.png",
     imageLabel: "Dormitory platform dashboard",
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/leidc024/UPC-DMS",
+      },
+    ],
   },
   {
     title: "EVACSIM (UP Cebu Campus Evacuation Simulator)",
@@ -99,7 +105,7 @@ export const projects: Project[] = [
       "Mapbox",
       "Tailwind CSS",
     ],
-    imageSrc: "/images/projects/project-showcase.png",
+    imageSrc: "/images/projects/evacsim.png",
     imageLabel: "Evacuation simulation map",
     links: [
       {
@@ -113,7 +119,7 @@ export const projects: Project[] = [
     description:
       "Playable web game with click-and-drag launch mechanics, physics-driven gameplay, enemy AI, and full game flow.",
     tech: ["Godot"],
-    imageSrc: "/images/projects/project-showcase.png",
+    imageSrc: "/images/projects/fling.png",
     imageLabel: "Physics-driven game scene",
     links: [
       {

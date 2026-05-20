@@ -21,9 +21,9 @@ export default function ProjectCard({
           sizes="(min-width: 1024px) 33vw, 100vw"
           className="object-cover transition duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-ink/20" />
+        <div className="absolute inset-0 bg-ink/20 dark:bg-ink/40 group-hover:bg-transparent dark:group-hover:bg-transparent transition-colors duration-200" />
         <div className="absolute inset-0 flex items-end p-4">
-          <span className="rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+          <span className="rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-black dark:bg-black dark:text-white">
             {project.imageLabel}
           </span>
         </div>
