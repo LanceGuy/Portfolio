@@ -1,6 +1,6 @@
 # API
 
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-21
 
 ## Table of Contents
 
@@ -48,7 +48,8 @@ curl http://localhost:3000/api/github
 **Response:** A list of GitHub repository objects from the GitHub REST API.
 
 **Notes:**
-- The route uses the Edge runtime and caches responses for 30 minutes.
+- The route uses the Edge runtime and is forced dynamic.
+- GitHub fetches use `cache: "no-store"`, and the response sets `Cache-Control: no-store`.
 - Without `GITHUB_TOKEN`, the route falls back to public repositories from the configured usernames and exact public repositories listed in `GITHUB_COLLAB_REPOS`.
 - With `GITHUB_TOKEN`, the route requests authenticated repositories using `owner`, `collaborator`, and `organization_member` affiliations.
 - Private repositories are filtered out before returning data to the client.

@@ -52,7 +52,6 @@ export const profile = {
       href: "https://github.com/habberjay",
     },
   ],
-  initials: "LG",
   bio:
     "Computer Science student at the University of the Philippines Cebu (expected July 2027). Full-stack developer intern experience building Next.js interfaces and PostgreSQL-backed features, with interests in product development, automation workflows, and data-driven tooling.",
   intro:

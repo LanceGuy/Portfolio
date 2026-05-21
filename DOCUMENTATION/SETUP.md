@@ -1,6 +1,6 @@
 # Setup
 
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-21
 
 ## Table of Contents
 
@@ -10,6 +10,7 @@
 - [Run Locally](#run-locally)
 - [Build and Start](#build-and-start)
 - [Linting](#linting)
+- [Type Checking](#type-checking)
 - [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
@@ -56,8 +57,21 @@ npm run start
 npm run lint
 ```
 
+## Type Checking
+
+```bash
+npm exec tsc -- --noEmit
+```
+
+On Windows PowerShell, use `npm.cmd` if script execution policy blocks the npm shim:
+
+```bash
+npm.cmd exec tsc -- --noEmit
+```
+
 ## Troubleshooting
 
 - If the GitHub section shows no repositories, verify `GITHUB_USERNAME` in your local environment file and confirm the GitHub API is reachable.
 - If collaborated repositories are missing, set `GITHUB_TOKEN` in your local environment file and restart the dev server, or add exact public repos to `GITHUB_COLLAB_REPOS`.
 - If you hit GitHub rate limits, set `GITHUB_TOKEN` in your local environment file and restart the dev server.
+- If `next build` cannot fetch Google Fonts, rerun the build with network access or build in an environment that can reach `fonts.googleapis.com`.

@@ -1,30 +1,68 @@
- 203 Cardoc Building, General Maxilom Avenue,  Cebu City, 6000 Cebu 
- SKILLS SHOWCASE CHALLENGE  IT & OPERATIONS (IT & PROGRAMMING) 
- Web Development Intern Challenge 
- Challenge: 
- Estimated Time: ~3 days  Tech Stack: Your choice (Vanilla JS, React, PHP, Node, Laravel, etc.)  Submission: GitHub repo (Must be Public)  Goal: Build and submit a fully functional and visually clean Personal Portfolio Website  that  showcases your web development skills — from layout to basic interactivity and  deployment. 
- Overview: 
- You're tasked with creating a personal portfolio website with at least 3 sections/pages:  Required Sections  1. Home 
- ●   Your name, profile picture, and a short bio 
- ●   Optionally a banner or intro animation  2. Projects 
- ●   List of at least 2 projects you've built (real or mock) 
- ●   For each: title, description, tech used, and image or link 
- 1 
- 3. Contact 
- ●   A simple contact form (name, email, message) 
- ●   It does not need to send email — just show a success alert on submit 
- Requirements: 
- 1. Must Have: 
- ●   Built using HTML + CSS + JavaScript or any stack you’re comfortable with  (React, Vue, Laravel, etc.) 
- ●   Must be responsive (works well on mobile and desktop) 
- ●   Clean, organized layout (use Flexbox/Grid or a CSS framework) 
- ●   Smooth navigation between sections or pages  
- 2. Bonus (Optional): 
- ●   Dark mode toggle (bonus if it saves preference) 
- ●   Fetch your GitHub repos dynamically from GitHub API 
- ●   Use animations (e.g., scroll fade-ins, hover effects) 
- ●   Deploy it online (e.g., GitHub Pages, or Vercel) 
- Challenge Submission. 
- 1.   Submit the following in a GitHub repository and as a ZIP file on Google Drive:  ➔   All source code (HTML/CSS/JS or framework files)  ➔   README.md with:  ◆   Short description  ◆   Technologies used  ◆   Any setup instructions (If deployed) Link to live website  ◆   Optional screenshots  ➔   Portfolio (Optional)  2.   Copy the Google Drive Link and input it in the Submission Form below: 
- ➔   Skill Showcase Challenge  | Submission Form 
- 2 
+# Web Development Intern Challenge
+
+**Last Updated:** 2026-05-21
+
+## Challenge Summary
+
+Build and submit a fully functional, visually clean personal portfolio website that showcases web development skills from layout to basic interactivity and deployment readiness.
+
+- **Estimated time:** About 3 days
+- **Tech stack:** Developer choice
+- **Submission:** Public GitHub repository and ZIP file on Google Drive
+- **Project type:** Personal portfolio website with at least Home, Projects, and Contact sections/pages
+
+## Implemented Stack
+
+- Next.js App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Internal Next.js API routes for contact and GitHub repository data
+
+## Requirement Checklist
+
+| Requirement | Status | Implementation |
+| --- | --- | --- |
+| Home section with name | Done | Hero renders `profile.name` from `src/lib/data.ts`. |
+| Profile picture | Done | Hero and header render `profile.imageSrc` using `next/image`. |
+| Short bio | Done | Hero renders `profile.bio` and `profile.intro`. |
+| Projects section | Done | `projects` array contains 3 projects. |
+| At least 2 projects | Done | Current projects: UPC DMS, EVACSIM, FLiNG. |
+| Project title, description, tech used | Done | Rendered by `src/components/ProjectCard.tsx`. |
+| Project image or link | Done | Each project has an image; each project also has a link when available. |
+| Contact form with name, email, message | Done | Implemented in `src/components/ContactForm.tsx`. |
+| Contact form success feedback | Done | Form posts to `/api/contact` and shows a success dialog. |
+| Built with web stack of choice | Done | Built with Next.js, React, TypeScript, and Tailwind CSS. |
+| Responsive mobile and desktop layout | Done | Uses responsive Tailwind grid/flex utilities across sections. |
+| Clean organized layout | Done | Uses reusable components for sections, cards, skills, timeline items, and dialogs. |
+| Smooth navigation | Done | Header anchors navigate between sections; global CSS enables smooth scrolling. |
+| Dark mode toggle | Done | Theme toggle is implemented in `ThemeToggle`. |
+| Dark mode saves preference | Done | `ThemeProvider` stores preference in `localStorage` under `portfolio-theme`. |
+| Dynamic GitHub repos | Done | `GithubRepos` fetches `/api/github`, which calls the GitHub REST API. |
+| Animations | Done | Fade-in section animation, hover transitions, and contact dialog animation are implemented. |
+| Online deployment | Ready | App is ready for Vercel or another Next.js host; add live URL after deployment. |
+
+## Submission Checklist
+
+- Source code is included in this repository.
+- `README.md` includes a description, technologies used, setup instructions, scripts, environment variables, and deployment notes.
+- Optional screenshots are not currently included.
+- ZIP submission can be created from this repository after excluding `node_modules`, `.next`, and local environment files.
+- Google Drive ZIP link and public GitHub repository link should be added to the submission form.
+
+## Verification
+
+Latest local verification run:
+
+- `npm.cmd run lint` - passed
+- `npm.cmd exec tsc -- --noEmit` - passed
+- `npm.cmd run build` - passed
+- Local `/` smoke test - `200 OK`
+- Local `/api/contact` smoke test - `200 {"ok":true}`
+- Local `/api/github` smoke test - `200 OK`
+
+## Notes
+
+- The contact endpoint intentionally does not send email or persist data because the challenge only requires success feedback.
+- The GitHub API route filters out private repositories before returning data.
+- Production builds need network access for `next/font/google` to fetch Fraunces and Space Grotesk during build.

@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 const DEFAULT_GITHUB_USERNAMES = ["LanceGuy", "Habberjay"];
 const AUTHENTICATED_REPO_AFFILIATIONS =
   "owner,collaborator,organization_member";
+const GITHUB_API_BASE_URL = "https://api.github.com";
 
 type GithubRepo = {
   id: number;
@@ -19,36 +20,35 @@ type GithubRepo = {
   };
 };
 
-async function fetchGithubRepos(
+async function fetchGithubJson<T>(
   url: string,
+  fallback: T,
   token?: string
-): Promise<GithubRepo[]> {
+): Promise<T> {
   const response = await fetch(url, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
     cache: "no-store",
   });
 
   if (!response.ok) {
-    return [];
+    return fallback;
   }
 
-  return (await response.json()) as GithubRepo[];
+  return (await response.json()) as T;
+}
+
+async function fetchGithubRepos(
+  url: string,
+  token?: string
+): Promise<GithubRepo[]> {
+  return fetchGithubJson<GithubRepo[]>(url, [], token);
 }
 
 async function fetchGithubRepo(
   url: string,
   token?: string
 ): Promise<GithubRepo | null> {
-  const response = await fetch(url, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return null;
-  }
-
-  return (await response.json()) as GithubRepo;
+  return fetchGithubJson<GithubRepo | null>(url, null, token);
 }
 
 function getRepoDisplayKey(repo: GithubRepo): string {
@@ -81,11 +81,12 @@ function dedupeRepos(repos: GithubRepo[]): GithubRepo[] {
 }
 
 function getConfiguredCollaboratorRepos(): string[] {
-  return (
-    process.env.GITHUB_COLLAB_REPOS?.split(",")
-      .map((repo) => repo.trim())
-      .filter((repo) => /^[^/\s]+\/[^/\s]+$/.test(repo)) ?? []
-  );
+  const raw = process.env.GITHUB_COLLAB_REPOS;
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .map((repo) => repo.trim())
+    .filter((repo) => /^[^/\s]+\/[^/\s]+$/.test(repo));
 }
 
 function isGithubRepo(repo: GithubRepo | null): repo is GithubRepo {
@@ -93,11 +94,12 @@ function isGithubRepo(repo: GithubRepo | null): repo is GithubRepo {
 }
 
 function getGithubUsernames(): string[] {
-  const configuredUsernames = process.env.GITHUB_USERNAME?.split(",")
-    .map((username) => username.trim())
-    .filter(Boolean);
+  const raw = process.env.GITHUB_USERNAME;
+  const configuredUsernames = raw
+    ? raw.split(",").map((username) => username.trim()).filter(Boolean)
+    : [];
 
-  return configuredUsernames?.length
+  return configuredUsernames.length
     ? configuredUsernames
     : DEFAULT_GITHUB_USERNAMES;
 }
@@ -112,21 +114,21 @@ export async function GET() {
       Promise.all(
         usernames.map((username) =>
           fetchGithubRepos(
-            `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
+            `${GITHUB_API_BASE_URL}/users/${username}/repos?sort=updated&per_page=100`,
             token
           )
         )
       ),
       Promise.all(
         configuredCollaboratorRepos.map((repo) =>
-          fetchGithubRepo(`https://api.github.com/repos/${repo}`, token)
+          fetchGithubRepo(`${GITHUB_API_BASE_URL}/repos/${repo}`, token)
         )
       ),
     ]);
 
   const authenticatedRepos = token
     ? await fetchGithubRepos(
-        `https://api.github.com/user/repos?affiliation=${AUTHENTICATED_REPO_AFFILIATIONS}&sort=updated&per_page=100`,
+        `${GITHUB_API_BASE_URL}/user/repos?affiliation=${AUTHENTICATED_REPO_AFFILIATIONS}&sort=updated&per_page=100`,
         token
       )
     : [];

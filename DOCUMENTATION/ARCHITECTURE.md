@@ -1,6 +1,6 @@
 # Architecture
 
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-21
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@
 
 ## System Overview
 
-This portfolio is a single-page Next.js App Router application that renders static content from local data and enriches it with live GitHub repository data. The UI is component-driven and styled with Tailwind CSS and custom CSS variables.
+This portfolio is a single-page Next.js App Router application that renders static content from local data and enriches it with live GitHub repository data. The UI is component-driven, styled with Tailwind CSS and custom CSS variables, and includes small client components for interactivity.
 
 ## Component Map
 
@@ -23,7 +23,7 @@ Browser
   -> Next.js App Router
     -> Root layout (fonts, theme provider)
     -> Page sections (hero, projects, experience, skills, GitHub, contact)
-    -> UI components (cards, section wrappers, timeline items)
+    -> UI components (cards, section wrappers, timeline items, contact dialog)
     -> API routes (contact, GitHub)
 ```
 
@@ -39,11 +39,11 @@ Browser
 2. **Client-side enrichment**
    - [src/components/GithubRepos.tsx](src/components/GithubRepos.tsx) requests live repository data from `/api/github`.
 3. **Contact submission**
-   - [src/components/ContactForm.tsx](src/components/ContactForm.tsx) sends a POST request to `/api/contact` and shows a client-side success alert.
+   - [src/components/ContactForm.tsx](src/components/ContactForm.tsx) sends a POST request to `/api/contact` and shows a portal-based success dialog rendered by [src/components/ContactNoticeDialog.tsx](src/components/ContactNoticeDialog.tsx).
 
 ## API Surface
 
-- `/api/github` fetches GitHub repositories using server-side fetch with a 30-minute revalidation window. See [src/app/api/github/route.ts](src/app/api/github/route.ts).
+- `/api/github` fetches GitHub repositories using server-side fetch with `cache: "no-store"` and returns `Cache-Control: no-store`. See [src/app/api/github/route.ts](src/app/api/github/route.ts).
 - `/api/contact` returns a JSON success response without persisting data. See [src/app/api/contact/route.ts](src/app/api/contact/route.ts).
 
 ## Configuration
@@ -62,5 +62,5 @@ Browser
 
 ## Operational Notes
 
-- The GitHub API route uses the Edge runtime and caches responses for 30 minutes.
+- The GitHub API route uses the Edge runtime, is forced dynamic, and does not cache responses.
 - The contact route does not send email or store submissions.

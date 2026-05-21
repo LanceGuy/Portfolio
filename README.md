@@ -1,8 +1,8 @@
 # Portfolio Website
 
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-21
 
-Modern, responsive portfolio built for the Skills Showcase Challenge. It highlights projects, experience, skills, and contact details while showcasing optional enhancements like dark mode and live GitHub repo fetching.
+Modern, responsive portfolio built for the Web Development Intern Skill Showcase Challenge. It highlights profile details, projects, experience, skills, contact options, and optional enhancements like persisted dark mode and live GitHub repository fetching.
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ Modern, responsive portfolio built for the Skills Showcase Challenge. It highlig
 
 ## Overview
 
-This project delivers a single-page portfolio experience with clear navigation, responsive layouts, and a visual system optimized for a professional presentation.
+This project delivers a single-page personal portfolio with smooth section navigation, responsive layouts, a contact form success dialog, and a visual system optimized for a professional presentation.
 
 ## Tech Stack
 
@@ -28,11 +28,12 @@ This project delivers a single-page portfolio experience with clear navigation, 
 
 ## Key Features
 
-- Home, Projects, and Contact sections that satisfy the challenge requirements
+- Home, Projects, and Contact sections that satisfy the required challenge scope
 - Experience, Education, Skills, and GitHub sections for added depth
 - Dark mode toggle with stored preference
-- Responsive layout and animated section entrances
-- Contact form with client-side success feedback
+- Responsive Flexbox/Grid layout and animated section entrances
+- Contact form that posts to `/api/contact` and shows client-side success feedback
+- GitHub repository cards fetched dynamically through `/api/github`
 
 ## Quick Start
 
@@ -75,12 +76,13 @@ Without `GITHUB_TOKEN`, the GitHub section falls back to public repositories fro
 
 ## Documentation Map
 
-- [ARCHITECTURE.md](ARCHITECTURE.md) - System design and data flow
+- [DOCUMENTATION/Challenge.md](DOCUMENTATION/Challenge.md) - Challenge requirements and completion checklist
+- [DOCUMENTATION/ARCHITECTURE.md](DOCUMENTATION/ARCHITECTURE.md) - System design and data flow
 - [FEATURES.md](FEATURES.md) - User-facing features mapped to implementation
-- [SETUP.md](SETUP.md) - Development and deployment setup
-- [API.md](API.md) - API endpoint specifications
-- [MAINTENANCE.md](MAINTENANCE.md) - Operational guidance and troubleshooting
+- [DOCUMENTATION/SETUP.md](DOCUMENTATION/SETUP.md) - Development and deployment setup
+- [DOCUMENTATION/API.md](DOCUMENTATION/API.md) - API endpoint specifications
+- [DOCUMENTATION/MAINTENANCE.md](DOCUMENTATION/MAINTENANCE.md) - Operational guidance and troubleshooting
 
 ## Deployment
 
-Deploy on Vercel or any Node.js hosting provider that supports Next.js. Set optional GitHub environment variables in the deployment configuration.
+Deploy on Vercel or any Node.js hosting provider that supports Next.js. Set optional GitHub environment variables in the deployment configuration. Add the live URL here after deployment if the submission form requires it.

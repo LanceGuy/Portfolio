@@ -1,6 +1,6 @@
 # Features
 
-**Last Updated:** 2026-05-19
+**Last Updated:** 2026-05-21
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ The portfolio delivers a single-page experience that highlights profile details,
 
 **Implementation:**
 - Hero content is defined in [src/lib/data.ts](src/lib/data.ts) and rendered in [src/app/page.tsx](src/app/page.tsx).
-- The profile snapshot card uses local data and reusable layout utilities in [src/components/Section.tsx](src/components/Section.tsx).
+- The profile snapshot card uses local data and `next/image` for the profile photo.
 
 ## Projects Showcase
 
@@ -39,7 +39,7 @@ The portfolio delivers a single-page experience that highlights profile details,
 
 **Implementation:**
 - Entries are defined in [src/lib/data.ts](src/lib/data.ts).
-- The timeline layout is handled by [src/components/TimelineItem.tsx](src/components/TimelineItem.tsx) inside [src/app/page.tsx](src/app/page.tsx).
+- The tab state is handled by [src/components/ExperienceEducationTabs.tsx](src/components/ExperienceEducationTabs.tsx), and each entry is rendered with [src/components/TimelineItem.tsx](src/components/TimelineItem.tsx).
 
 ## Skills and Focus Areas
 
@@ -55,7 +55,7 @@ The portfolio delivers a single-page experience that highlights profile details,
 
 **Implementation:**
 - [src/components/GithubRepos.tsx](src/components/GithubRepos.tsx) fetches `/api/github` on the client and renders cards.
-- The API route in [src/app/api/github/route.ts](src/app/api/github/route.ts) requests repository data from GitHub and caches it for 30 minutes.
+- The API route in [src/app/api/github/route.ts](src/app/api/github/route.ts) requests repository data from GitHub without server caching, deduplicates repositories by display name, filters out private repositories, and sorts by most recent update.
 
 ## Contact Workflow
 
@@ -64,7 +64,7 @@ The portfolio delivers a single-page experience that highlights profile details,
 **Implementation:**
 - The form is implemented in [src/components/ContactForm.tsx](src/components/ContactForm.tsx).
 - Submissions are sent to `/api/contact`, which returns a JSON success response. See [src/app/api/contact/route.ts](src/app/api/contact/route.ts).
-- The success message is client-side and does not send email.
+- The result message is a client-side portal dialog implemented in [src/components/ContactNoticeDialog.tsx](src/components/ContactNoticeDialog.tsx); it auto-dismisses and can be closed with Escape or the close controls.
 
 ## Theme Toggle
 
