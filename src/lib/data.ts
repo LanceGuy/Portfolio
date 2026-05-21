@@ -16,6 +16,8 @@ export type ExperienceItem = {
   role: string;
   company: string;
   date: string;
+  imageSrc: string;
+  imageLabel: string;
   highlights: string[];
 };
 
@@ -23,6 +25,8 @@ export type EducationItem = {
   school: string;
   degree: string;
   date: string;
+  imageSrc: string;
+  imageLabel: string;
   details: string[];
 };
 
@@ -135,6 +139,8 @@ export const experience: ExperienceItem[] = [
     role: "Full Stack Developer Intern",
     company: "Bayoa Analytics",
     date: "September 2024 - November 2024",
+    imageSrc: "/images/exp and edu/bayoa.jpg",
+    imageLabel: "Bayoa Analytics logo",
     highlights: [
       "Developed responsive Next.js components that improved UI usability and overall experience.",
       "Integrated frontend features with PostgreSQL-backed functionality for scalable data management.",
@@ -145,6 +151,8 @@ export const experience: ExperienceItem[] = [
     role: "FabLab Technician",
     company: "Fablab Eastern Visayas",
     date: "June 2022 - July 2022",
+    imageSrc: "/images/exp and edu/fablab.png",
+    imageLabel: "Fablab Eastern Visayas logo",
     highlights: [
       "Guided users operating 3D printers and laser cutters with a focus on safety and efficiency.",
       "Maintained and troubleshot equipment while supporting prototyping projects.",
@@ -157,6 +165,8 @@ export const education: EducationItem[] = [
     school: "University of the Philippines Cebu",
     degree: "Bachelor of Science in Computer Science",
     date: "Expected July 2027",
+    imageSrc: "/images/exp and edu/up-cebu.jpg",
+    imageLabel: "University of the Philippines Cebu seal",
     details: [
       "Relevant coursework: Data Structures and Algorithms, Web Development, Software Engineering, Systems Analysis and Design, AI, DBMS.",
     ],
@@ -165,6 +175,8 @@ export const education: EducationItem[] = [
     school: "Philippine Science High School - Eastern Visayas Campus",
     degree: "STEM Strand | GWA 1.4",
     date: "June 2023",
+    imageSrc: "/images/exp and edu/pshs-evc.jpg",
+    imageLabel: "Philippine Science High School Eastern Visayas Campus seal",
     details: ["Awards: With High Honors."],
   },
 ];

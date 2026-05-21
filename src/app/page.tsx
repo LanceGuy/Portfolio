@@ -6,7 +6,7 @@ import Image from "next/image";
 import ProjectCard from "@/components/ProjectCard";
 import Section from "@/components/Section";
 import SkillGroup from "@/components/SkillGroup";
-import TimelineItem from "@/components/TimelineItem";
+import ExperienceEducationTabs from "@/components/ExperienceEducationTabs";
 import {
   education,
   experience,
@@ -111,33 +111,13 @@ export default function Home() {
             id="experience"
             eyebrow="Background"
             title="Experience and Education"
-            subtitle="Hands-on roles spanning full-stack engineering and technical operations, paired with formal CS training."
+            subtitle="Switch between work experience and education with a simple toggle."
             className="fade-in-up"
           >
-            <div className="grid gap-6 lg:grid-cols-2">
-              <div className="space-y-6">
-                {experience.map((item) => (
-                  <TimelineItem
-                    key={item.role}
-                    title={item.role}
-                    subtitle={item.company}
-                    date={item.date}
-                    highlights={item.highlights}
-                  />
-                ))}
-              </div>
-              <div className="space-y-6">
-                {education.map((item) => (
-                  <TimelineItem
-                    key={item.school}
-                    title={item.school}
-                    subtitle={item.degree}
-                    date={item.date}
-                    highlights={item.details}
-                  />
-                ))}
-              </div>
-            </div>
+            <ExperienceEducationTabs
+              experience={experience}
+              education={education}
+            />
           </Section>
 
           <Section
